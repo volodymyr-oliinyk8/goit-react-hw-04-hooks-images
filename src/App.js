@@ -22,6 +22,7 @@ function App() {
     if (search === '') {
       return;
     }
+
     setIsLoading(true);
     apiService
       .featchImage(search, currentPage)
@@ -30,7 +31,9 @@ function App() {
           setNothingMessege(true);
         }
         setImages(prevImages => [...prevImages, ...images]);
-        handleScroll();
+        if (currentPage > 1) {
+          handleScroll();
+        }
       })
       .catch(error => {
         setError(error);
@@ -47,6 +50,7 @@ function App() {
   };
   const handleMoreImages = () => {
     setCurrentPage(currentPage + 1);
+    handleScroll();
   };
   const handleScroll = () => {
     window.scrollTo({
